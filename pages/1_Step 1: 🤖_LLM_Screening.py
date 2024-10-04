@@ -4,6 +4,9 @@ import pandas as pd
 from extractor import extractor_chain
 from screener import screener_chain
 
+default_screening_question = "What is the association between exposure to radiotherapy for prostate cancer and incidence/risk of second malignancy / second primary cancers?"
+default_exclusion_criteria = "non-clinical studies, editorials, review articles, case reports, conference abstracts, basic science papers, unclear comparator group, metastatic tumors, non-standard treatment for prostate cancer (such as cryotherapy), articles not dealing with radiation induced malignancy"
+
 st.set_page_config(page_title="Oct 4 2024 Hackathon - Systematic Review Screener", layout="wide")
 
 if "articles" not in st.session_state:
@@ -22,6 +25,15 @@ EXTRACTOR_BATCH_SIZE = 100
 
 with st.sidebar:
     file = st.file_uploader("Upload a CSV file containing the articles to screen", type="csv")
+    '---'
+    if st.button("Use Sample Random Dataset", use_container_width=True):
+        file = "example_data/example_random_set.csv"
+        st.session_state.screening_question = default_screening_question
+        st.session_state.exclusion_criteria = default_exclusion_criteria
+    if st.button("Use Sample Validated Dataset", use_container_width=True):
+        file = "example_data/example_validation_set.csv"
+        st.session_state.screening_question = default_screening_question
+        st.session_state.exclusion_criteria = default_exclusion_criteria
     if file: 
         dataset = pd.read_csv(file)[:LIMIT_LINES]
         articles = [f"Title: {row['Title']}\nAbstract: {row['Abstract']}" for _, row in dataset.iterrows()]
@@ -35,11 +47,11 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.write("Screening Questions")
-    st.session_state.screening_question = st.text_area("Enter the screening question")
+    st.session_state.screening_question = st.text_area("Enter the screening question", value=st.session_state.screening_question)
 
 with col2:
     st.write("Exclusion Criteria")
-    st.session_state.exclusion_criteria = st.text_area("Enter the exclusion criteria")
+    st.session_state.exclusion_criteria = st.text_area("Enter the exclusion criteria", value=st.session_state.exclusion_criteria)
 
 
 if st.button("Extract Data"):

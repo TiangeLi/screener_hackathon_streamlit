@@ -20,7 +20,7 @@ if "screening_results" not in st.session_state:
     st.session_state.screening_results = []
 
 with st.sidebar:
-    file = st.file_uploader("Upload the LLM screening results", type="csv")
+    file = st.file_uploader("Upload LLM Results from Step 1", type="csv")
     if file:
         file = pd.read_csv(file)
         st.session_state.screening_items = [{
