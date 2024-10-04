@@ -16,10 +16,14 @@ if "final_output" not in st.session_state:
     st.session_state.final_output = []
 
 
+LIMIT_LINES = 200
+# save on api costs, so limit to 200 lines for now
+
+
 with st.sidebar:
     file = st.file_uploader("Upload a CSV file containing the articles to screen", type="csv")
     if file: 
-        dataset = pd.read_csv(file)
+        dataset = pd.read_csv(file)[:LIMIT_LINES]
         articles = [f"Title: {row['Title']}\nAbstract: {row['Abstract']}" for _, row in dataset.iterrows()]
         st.session_state.articles = articles
         length = len(st.session_state.articles)
