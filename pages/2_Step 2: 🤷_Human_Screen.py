@@ -20,7 +20,10 @@ if "screening_results" not in st.session_state:
     st.session_state.screening_results = []
 
 with st.sidebar:
-    file = st.file_uploader("Upload LLM Results from Step 1", type="csv")
+    file = st.file_uploader("Upload LLM Screening Results", type="csv")
+    '---'
+    if st.button("Use Results from Step 1"):
+        file = "example_data/llm_screening_results.csv"
     if file:
         file = pd.read_csv(file)
         st.session_state.screening_items = [{
@@ -80,6 +83,8 @@ else:
                     text += f"{sentence} "
                 else:
                     text += f":blue-background[{sentence}] "
+                if i == 0:
+                    text += "\n\n"
             st.write("**Original Abstract:**\n\n")
             st.write(text)
             _ic1, _ic2 = st.columns(2)

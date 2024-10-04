@@ -77,7 +77,8 @@ if st.button("Extract Data"):
             if st.session_state.final_output:
                 csv = pd.DataFrame(st.session_state.final_output)
                 export = csv.to_csv(index=False).encode('utf-8')
-
+                with open("example_data/llm_screening_results.csv", "wb") as f:
+                    f.write(export)
                 download.download_button(
                     label=':red[Download results]',
                     data=export,
