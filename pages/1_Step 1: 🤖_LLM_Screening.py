@@ -44,8 +44,6 @@ with st.sidebar:
         st.session_state.articles = articles
         length = len(st.session_state.articles)
         st.write(f"Number of articles to screen: {length}")
-    '---'
-    download = st.empty()
 
 col1, col2 = st.columns(2)
 
@@ -60,10 +58,11 @@ with col2:
 
 if st.button("Extract Data"):
     info = st.empty()
+    download = st.empty()
     data_container = st.empty()
     inc_cnt, exc_cnt = 0, 0
     st.session_state.final_output = []
-    with st.spinner("Extracting data..."):
+    with st.spinner(f"Extracting and screening [{len(st.session_state.articles)}] articles..."):
         batch_size = EXTRACTOR_BATCH_SIZE
         for i in range(0, len(st.session_state.articles), batch_size):
             batch = st.session_state.articles[i:i+batch_size]
@@ -77,18 +76,18 @@ if st.button("Extract Data"):
             
             final = [{**article, "include": s["include"], "original_text": original} for article, s, original in zip(extracted, screened, batch)]
             st.session_state.final_output.extend(final)
-            info.markdown(f"### Screened {inc_cnt + exc_cnt} articles. {inc_cnt} included and {exc_cnt} excluded.")
+            info.markdown(f"### Screened **{inc_cnt + exc_cnt}** articles.\n\nIncluded: **{inc_cnt}**  \nExcluded: **{exc_cnt}**")
             if st.session_state.final_output:
                 csv = pd.DataFrame(st.session_state.final_output)
                 export = csv.to_csv(index=False).encode('utf-8')
                 with open("example_data/llm_screening_results.csv", "wb") as f:
                     f.write(export)
                 download.download_button(
-                    label=':red[Download results]',
+                    label=':red[Download llm_screening_results.csv]',
                     data=export,
                     file_name='llm_screening_results.csv',
                     mime='text/csv'
                 )
-            with data_container.expander("View last 20 extracted articles"):
+            with data_container.expander(f"View last {min(20, len(final))} extracted articles"):
                 for article in final[-20:]:
                     st.write(article)

@@ -24,6 +24,7 @@ with st.sidebar:
     '---'
     if st.button("Use Results from Step 1"):
         file = "example_data/llm_screening_results.csv"
+        st.session_state.current_item_index = 0
     if file:
         file = pd.read_csv(file)
         st.session_state.screening_items = [{
