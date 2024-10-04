@@ -1,9 +1,12 @@
 from dotenv import load_dotenv
 load_dotenv(override=True)
 
-import nltk
-nltk.download('punkt')
-nltk.download('punkt_tab')
+import os
+
+if not os.getenv("LOCAL"):
+    import nltk
+    nltk.download('punkt')
+    nltk.download('punkt_tab')
 
 from nltk.tokenize import sent_tokenize
 from tagging import get_sources_chain
