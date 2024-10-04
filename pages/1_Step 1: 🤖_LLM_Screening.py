@@ -58,6 +58,7 @@ if st.button("Extract Data"):
     info = st.empty()
     data_container = st.empty()
     inc_cnt, exc_cnt = 0, 0
+    st.session_state.final_output = []
     with st.spinner("Extracting data..."):
         batch_size = EXTRACTOR_BATCH_SIZE
         for i in range(0, len(st.session_state.articles), batch_size):
