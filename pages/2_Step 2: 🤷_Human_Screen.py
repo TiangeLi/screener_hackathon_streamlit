@@ -39,13 +39,15 @@ with st.sidebar:
                 "conclusions": row["conclusions"],
             }
         } for _, row in file.iterrows()]
+        '---'
+        st.write(f"## :green[**{st.session_state.current_item_index} / {len(st.session_state.screening_items)} articles to screen**]")
 
 coll, colr = st.columns(2)
 
 if not st.session_state.screening_items:
     st.write("No articles to screen. Please upload a CSV file with the LLM screening results.")
 
-if st.session_state.current_item_index >= len(st.session_state.screening_items):
+elif st.session_state.current_item_index >= len(st.session_state.screening_items):
     st.write("Finished screening all articles!")
     st.download_button("Download the screening results", data=pd.DataFrame(st.session_state.screening_results), file_name="final_screening_results.csv")
 
@@ -54,12 +56,13 @@ else:
         if not st.session_state.tagged_data:
             curr_item = st.session_state.screening_items[st.session_state.current_item_index]
             tagged_article = " ".join([f"<sentence #{i}>{sentence}</sentence #{i}>" for i, sentence in enumerate(curr_item["sentences"])])
-            st.session_state.tagged_data = get_sources_chain.invoke(
-                {
-                    "article": tagged_article,
-                    "extracted_data": curr_item["extracted_data"],
-                }
-            )
+            with st.spinner("LLM tagging data sources..."):
+                st.session_state.tagged_data = get_sources_chain.invoke(
+                    {
+                        "article": tagged_article,
+                        "extracted_data": curr_item["extracted_data"],
+                    }
+                )
 
         curr_item = st.session_state.screening_items[st.session_state.current_item_index]
 
