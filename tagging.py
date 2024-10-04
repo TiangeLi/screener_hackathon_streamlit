@@ -2,7 +2,7 @@ import streamlit as st
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-from typing_extensions import TypedDict, Annotated, Literal, Optional
+from typing_extensions import TypedDict, Optional
 
 
 class ExtractedSources(TypedDict):

@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 load_dotenv(override=True)
 from nltk.tokenize import sent_tokenize
-from screening import get_sources_chain
+from tagging import get_sources_chain
 import streamlit as st
 import pandas as pd
 
