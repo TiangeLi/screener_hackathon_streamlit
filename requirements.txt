@@ -5,4 +5,4 @@ langchain-community
 pandas
 python-dotenv
 typing-extensions
-nltk
+nltk==3.9.1
