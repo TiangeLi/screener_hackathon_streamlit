@@ -2,6 +2,18 @@
 
 Deployed at https://llm-screener.streamlit.app/
 
+### Motivation
+
+Systematic reviews are a cornerstone of evidence based medicine, but generating them is:
+- slow
+- tedious
+- expensive
+- unsustainable
+
+We propose automating the Title/Abstract screening component of systematic review generation.
+This step is typically done with 2 human reviewers (for interrater reliability and concordance), taking weeks of human labor per reviewer.
+Now we can change it to 1 human + 1 LLM!
+
 ### Demo Instructions:
 Page 1 
 - use one of the 3 demo buttons to pull in a sample dataset of abstracts (including metadata e.g. title, abstract, doi, authors, etc.)
