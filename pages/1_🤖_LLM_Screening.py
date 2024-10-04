@@ -20,7 +20,6 @@ LIMIT_LINES = 200
 EXTRACTOR_BATCH_SIZE = 100
 # save on api costs, so limit to 200 lines for now
 
-
 with st.sidebar:
     file = st.file_uploader("Upload a CSV file containing the articles to screen", type="csv")
     if file: 
@@ -29,16 +28,8 @@ with st.sidebar:
         st.session_state.articles = articles
         length = len(st.session_state.articles)
         st.write(f"Number of articles to screen: {length}")
-    if st.session_state.final_output:
-        '---'
-        csv = pd.DataFrame(st.session_state.final_output)
-        export = csv.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label=':red[Download results]',
-            data=export,
-            file_name='results.csv',
-            mime='text/csv'
-        )
+    '---'
+    download = st.empty()
 
 col1, col2 = st.columns(2)
 
@@ -70,6 +61,16 @@ if st.button("Extract Data"):
             final = [{**article, "include": s["include"], "original_text": original} for article, s, original in zip(extracted, screened, batch)]
             st.session_state.final_output.extend(final)
             info.markdown(f"### Screened {inc_cnt + exc_cnt} articles. {inc_cnt} included and {exc_cnt} excluded.")
+            if st.session_state.final_output:
+                csv = pd.DataFrame(st.session_state.final_output)
+                export = csv.to_csv(index=False).encode('utf-8')
+
+                download.download_button(
+                    label=':red[Download results]',
+                    data=export,
+                    file_name='llm_screening_results.csv',
+                    mime='text/csv'
+                )
             with data_container.expander("View last 20 extracted articles"):
                 for article in final[-20:]:
                     st.write(article)
