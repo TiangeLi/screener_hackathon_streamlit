@@ -3,10 +3,10 @@ load_dotenv(override=True)
 
 import os
 
-if not os.getenv("LOCAL"):
-    import nltk
-    nltk.download('punkt')
-    nltk.download('punkt_tab')
+#if not os.getenv("LOCAL"):
+#    import nltk
+#    nltk.download('punkt')
+#    nltk.download('punkt_tab')
 
 from nltk.tokenize import sent_tokenize
 from tagging import get_sources_chain
@@ -37,7 +37,7 @@ with st.sidebar:
     if file:
         file = pd.read_csv(file)
         st.session_state.screening_items = [{
-            "sentences": sent_tokenize(row["original_text"]),
+            "sentences": sent_tokenize(row["original_text"].replace(".,", ".")),
             "include": row["include"],
             "extracted_data": {
                 "data_sources": row["data_sources"],
@@ -58,7 +58,7 @@ with st.sidebar:
 
 with st.expander("Show Human / LLM Screening Concordance"):
     compare_df = [
-        {"Article": sent_tokenize(entry["original_text"])[0],  # hacky + inefficient but oh well
+        {"Article": sent_tokenize(entry["original_text"].replace(".,", "."))[0],  # hacky + inefficient but oh well
         "Human Decision": entry["human_include"], 
         "LLM Decision": entry["llm_include"],
         "Concordant": entry["llm_include"] == entry["human_include"]}
