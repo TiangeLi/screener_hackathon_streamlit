@@ -13,12 +13,14 @@ This app allows you to automate Title/Abstract Screening for Systematic Reviews.
 **Page 1 - LLM Screener**:
 - Upload a CSV file with Title/Abstracts to screen
 - Enter a screening question and exclusion criteria
-- Click "Screen"
+- Click **:green-background[Extract Data]**
 - Download the results!
 
 **Page 2 - Human Screening**:
 - Review each abstract, with LLM generated highlights to quickly zero in on relevant information
 - Mark the abstracts that should be excluded
 - Download the results!
+
+Now each abstract has been dual-screened by an LLM and a human!
 """
 )

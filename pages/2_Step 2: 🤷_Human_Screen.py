@@ -46,6 +46,16 @@ with st.sidebar:
     '---'
     st.write(f"## :green[**{st.session_state.current_item_index} / {len(st.session_state.screening_items)} articles screened**]")
 
+
+with st.expander("Show Human / LLM Screening Concordance"):
+    compare_df = [
+        {"Article": sent_tokenize(entry["original_text"])[0],  # hacky + inefficient but oh well
+        "Human Decision": entry["human_include"], 
+        "LLM Decision": entry["llm_include"],
+        "Concordant": entry["llm_include"] == entry["human_include"]}
+    for entry in st.session_state.screening_results]
+    st.write(pd.DataFrame(compare_df))
+
 coll, colr = st.columns(2)
 
 if not st.session_state.screening_items:
