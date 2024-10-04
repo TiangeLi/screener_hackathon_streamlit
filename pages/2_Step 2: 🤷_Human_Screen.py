@@ -42,8 +42,8 @@ with st.sidebar:
                 "conclusions": row["conclusions"],
             }
         } for _, row in file.iterrows()]
-        '---'
-        st.write(f"## :green[**{st.session_state.current_item_index} / {len(st.session_state.screening_items)} articles to screen**]")
+    '---'
+    st.write(f"## :green[**{st.session_state.current_item_index} / {len(st.session_state.screening_items)} articles screened**]")
 
 coll, colr = st.columns(2)
 

@@ -34,6 +34,10 @@ with st.sidebar:
         file = "example_data/example_validation_set.csv"
         st.session_state.screening_question = default_screening_question
         st.session_state.exclusion_criteria = default_exclusion_criteria
+    if st.button("Use Sample Tiny Set", use_container_width=True):
+        file = "example_data/example_tiny_set.csv"
+        st.session_state.screening_question = default_screening_question
+        st.session_state.exclusion_criteria = default_exclusion_criteria
     if file: 
         dataset = pd.read_csv(file)[:LIMIT_LINES]
         articles = [f"Title: {row['Title']}\nAbstract: {row['Abstract']}" for _, row in dataset.iterrows()]
