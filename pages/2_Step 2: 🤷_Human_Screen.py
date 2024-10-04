@@ -56,6 +56,8 @@ with st.expander("Show Human / LLM Screening Concordance"):
     for entry in st.session_state.screening_results]
     st.write(pd.DataFrame(compare_df))
 
+'---'
+
 coll, colr = st.columns(2)
 
 if not st.session_state.screening_items:
