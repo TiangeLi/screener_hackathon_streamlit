@@ -1,0 +1,8 @@
+streamlit
+langchain
+langchain-openai
+langchain-community
+pandas
+python-dotenv
+typing-extensions
+nltk

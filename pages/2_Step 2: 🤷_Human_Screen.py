@@ -1,9 +1,13 @@
 from dotenv import load_dotenv
 load_dotenv(override=True)
+
+import nltk
 from nltk.tokenize import sent_tokenize
 from tagging import get_sources_chain
 import streamlit as st
 import pandas as pd
+
+nltk.download('punkt')
 
 st.set_page_config(layout="wide")
 
