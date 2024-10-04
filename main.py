@@ -17,6 +17,7 @@ if "final_output" not in st.session_state:
 
 
 LIMIT_LINES = 200
+EXTRACTOR_BATCH_SIZE = 100
 # save on api costs, so limit to 200 lines for now
 
 
@@ -52,9 +53,10 @@ with col2:
 
 if st.button("Extract Data"):
     info = st.empty()
+    data_container = st.empty()
     inc_cnt, exc_cnt = 0, 0
     with st.spinner("Extracting data..."):
-        batch_size = 100
+        batch_size = EXTRACTOR_BATCH_SIZE
         for i in range(0, len(st.session_state.articles), batch_size):
             batch = st.session_state.articles[i:i+batch_size]
             to_extract = [{"article": article, "screening_question": st.session_state.screening_question} for article in batch]
@@ -68,6 +70,6 @@ if st.button("Extract Data"):
             final = [{**article, "include": s["include"], "original_text": original} for article, s, original in zip(extracted, screened, batch)]
             st.session_state.final_output.extend(final)
             info.markdown(f"### Screened {inc_cnt + exc_cnt} articles. {inc_cnt} included and {exc_cnt} excluded.")
-            with st.expander("View last 20 extracted articles"):
+            with data_container.expander("View last 20 extracted articles"):
                 for article in final[-20:]:
                     st.write(article)
