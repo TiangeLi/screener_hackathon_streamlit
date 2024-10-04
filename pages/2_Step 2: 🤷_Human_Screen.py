@@ -49,7 +49,14 @@ if not st.session_state.screening_items:
 
 elif st.session_state.current_item_index >= len(st.session_state.screening_items):
     st.write("Finished screening all articles!")
-    st.download_button("Download the screening results", data=pd.DataFrame(st.session_state.screening_results), file_name="final_screening_results.csv")
+    csv = pd.DataFrame(st.session_state.screening_results)
+    export = csv.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="Download screening results", 
+        data=export,
+        file_name="final_screening_results.csv",
+        mime="text/csv"
+    )
 
 else:
     if st.session_state.screening_items:
