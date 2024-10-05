@@ -28,6 +28,6 @@ sr_prompt = ChatPromptTemplate([
 
 class Inclusion(TypedDict):
     include: bool
-    reason_if_excluded: Optional[str]
+    #reason_if_excluded: Optional[str]
 
 screener_chain = sr_prompt | llm.with_structured_output(Inclusion, method="json_schema", strict=True)
