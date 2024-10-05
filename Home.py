@@ -29,9 +29,8 @@ Page 1
 
 Page 2
 - load downloaded data from Page 1, or press the "Use Results from Step 1" button to load in data set
-- for each abstract:
---> the left side of the page shows structured data extracted by the LLM, with buttons that highlight the relevant passages in the original abstract that it was extracted from
---> the right side of the page shows the original abstract
+- for each abstract: the left side shows structured data extracted by the LLM; the right shows the original abstract for human screening.
+- contextual :blue-background[highlighting] of the abstract can be done by clicking on the structured data fields to highlight the source text in the abstract
 - manual screening can be done now
 - when finished, you may download the final results containing human and LLM screening decision
 
