@@ -52,6 +52,8 @@ with st.sidebar:
                 "conclusions": row["conclusions"],
             }
         } for _, row in file.iterrows()]
+        st.session_state.current_item_index = 0
+        st.session_state.screening_results = []
     '---'
     st.write(f"## :green[**{st.session_state.current_item_index} / {len(st.session_state.screening_items)} articles screened**]")
 
